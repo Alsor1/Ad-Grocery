@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Ad-Grocery"
+rootProject.name = "AD_Grocery"
 include(":app")
