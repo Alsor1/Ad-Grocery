@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
                     - MainActivity.user.timePassed(
                 Date(System.currentTimeMillis())
             ))
-        binding.moneySavedView.text = "You saved " + MainActivity.user.moneySaved + " this month"
+        binding.moneySavedView.text = "You saved " + MainActivity.user.moneySaved
 
         val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner) {

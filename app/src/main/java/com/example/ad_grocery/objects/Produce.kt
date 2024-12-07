@@ -81,10 +81,10 @@ class Produce(
     val cost: Float,
     var quantity: Int,
     var category: Int,
-    var discount: Float
+    var discount: Float,
     val imageAddress: String
 ) {
-    constructor(brand: Int expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount, image)
+    constructor(brand: Int, expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount, image)
 
     fun calculateUtility(user: User): Float {
         val prefWeight = 0.5f
