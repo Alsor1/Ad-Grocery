@@ -16,5 +16,9 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
             android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/history"
+            android:title="@string/menu_history" />
     </group>
 </menu>

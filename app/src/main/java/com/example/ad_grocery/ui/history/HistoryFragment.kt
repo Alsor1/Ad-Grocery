@@ -1,55 +1,45 @@
-package com.example.ad_grocery.ui.home
+package com.example.ad_grocery.ui.history
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.ad_grocery.MainActivity
-import com.example.ad_grocery.databinding.FragmentHistoryBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.ad_grocery.R
+import com.example.ad_grocery.objects.Produce
 import java.util.Date
 
 class HistoryFragment : Fragment() {
 
-    private var _binding: FragmentHistoryBinding? = null
+    private lateinit var historyRecyclerView: RecyclerView
+    private lateinit var historyAdapter: HistoryAdapter
+    private val historyList = arrayListOf(
+        Produce("Apple", 0, Date(), 2.0f, 5, 1, 0.0f, ""),
+        Produce("Banana", 0, Date(), 1.5f, 7, 1, 0.0f, ""),
+        Produce("Milk", 0, Date(), 3.0f, 2, 1, 0.0f, ""),
+        // Add more items as needed
+    )
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        historyRecyclerView = view.findViewById(R.id.historyRecyclerView)
+        historyAdapter = HistoryAdapter(historyList)
+        historyRecyclerView.layoutManager = LinearLayoutManager(context)
+        historyRecyclerView.adapter = historyAdapter
 
-        binding.budgetView.text = "Current budget: " + MainActivity.user.currBudget
-        binding.nameView.text = "Hello, " + MainActivity.user.name + "!"
-        binding.daysUntilView.text =
-            "Days until budget reset: " + (MainActivity.user.daysInterval
-                    - MainActivity.user.timePassed(
-                Date(System.currentTimeMillis())
-            ))
-        binding.moneySavedView.text = "You saved " + MainActivity.user.moneySaved
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    fun addNewItemToHistory(newProduct: Produce) {
+        historyList.add(0, newProduct) // Add the new product to the start of the list
+        historyAdapter.notifyItemInserted(0) // Notify the adapter of the new item
+        historyRecyclerView.scrollToPosition(0) // Scroll to the new item
     }
 }

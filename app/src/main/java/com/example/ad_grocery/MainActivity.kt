@@ -12,7 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ad_grocery.databinding.ActivityMainBinding
+import com.example.ad_grocery.objects.Produce
 import com.example.ad_grocery.objects.User
+import com.example.ad_grocery.ui.history.HistoryFragment
 import java.time.LocalDate
 import java.util.Date
 import java.util.HashMap
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_grocery, R.id.nav_profile
+                R.id.nav_home, R.id.nav_grocery, R.id.nav_profile, R.id.nav_history
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
