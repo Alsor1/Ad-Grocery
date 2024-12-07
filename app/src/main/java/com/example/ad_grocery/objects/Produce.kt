@@ -52,22 +52,30 @@ object ProductDB {
     }
 
     fun calculateCostScore(id: String): Int {
-        val prices: List<Float> = this.getPrices(id)
+        val prices: List<Float>? = this.getPrices(id)
 
+        currentPrice = 
 
+        if (prices == null) {
+            return 0
+        }
+
+        val minPrice = prices.sorted().take(10)
     }
 }
 
 
 class Produce(
     val id: String,
+    val brand: Int,
     val expiry: Date,
     val cost: Float,
     var quantity: Int,
     var category: Int,
     var discount: Float
+    val imageAddress: String
 ) {
-    constructor(expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float) : this(IdGenerator().getId().toString(), expiry, cost, quantity, category, discount)
+    constructor(brand: Int expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount)
 
     fun calculateUtility(user: User): Float {
         val prefWeight = 0.5f
@@ -80,7 +88,7 @@ class Produce(
         val expiryScore = calculateExpiryScore()
         val costScore = ProductDB.calculateCostScore(this.id)
 
-        return prefWeight * preferenceScore + costWeight * costScore + expiryWeight * expiryScore
+        return prefWeight * preferenceScore + costWeight * costScore + expiryWeight * expiryScore + discount
     }
 
     fun calculateDiscountedCost(): Float {
@@ -97,7 +105,7 @@ class Produce(
             return 0
         } else {
             for (i in 1..10) {
-                if (daysDifference < 2 * i) {
+                if (daysDifference < 3 * i) {
                     return i
                 }
             }
