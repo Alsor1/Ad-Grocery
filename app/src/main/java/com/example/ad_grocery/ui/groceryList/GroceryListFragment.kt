@@ -58,11 +58,22 @@ class GroceryListFragment : Fragment() {
         }
         updateTotalPrice()
 
+        binding.magicButton.setOnClickListener {
+            handleMagicButtonClick()
+        }
+
+
         return binding.root
     }
 
     private fun updateTotalPrice() {
         binding.totalPriceText.text = "Total Price: %.2f".format(totalCost)
+    }
+
+
+    private fun handleMagicButtonClick() {
+        // TODO: add function to modify the produce list
+        adapter.notifyDataSetChanged()
     }
 
     fun addProduct(product: Produce) {

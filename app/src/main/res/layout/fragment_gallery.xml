@@ -20,7 +20,7 @@
 
         <!-- Button on the Left -->
         <ImageButton
-            android:id="@+id/leftButton"
+            android:id="@+id/magicButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/round_background"

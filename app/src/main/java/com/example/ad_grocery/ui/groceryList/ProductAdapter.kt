@@ -15,6 +15,8 @@ class ProductAdapter(
     private val onQuantityChange: (Float) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
+    private lateinit var magicButton: Button
+
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val productImage: ImageView = view.findViewById(R.id.productImage)
         val productNameText: TextView = view.findViewById(R.id.productNameText)
@@ -26,6 +28,7 @@ class ProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
+
         return ProductViewHolder(view)
     }
 
@@ -41,6 +44,11 @@ class ProductAdapter(
             product.quantity++
             notifyItemChanged(position)
             onQuantityChange(product.cost)
+        }
+
+        holder.magicButton.setOnClickListener {
+            // TODO: call function to update list
+            notifyItemRangeChanged(0, products.size)
         }
 
         holder.decreaseButton.setOnClickListener {
