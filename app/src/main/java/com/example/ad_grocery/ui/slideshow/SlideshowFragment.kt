@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.ad_grocery.MainActivity
+import com.example.ad_grocery.R
 import com.example.ad_grocery.databinding.FragmentSlideshowBinding
+import com.example.ad_grocery.ui.history.HistoryFragment
 
 class SlideshowFragment : Fragment() {
 
