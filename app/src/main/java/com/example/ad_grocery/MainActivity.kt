@@ -103,6 +103,48 @@ class MainActivity : AppCompatActivity() {
                 Produce("8", 303, Date(System.currentTimeMillis() + 86400000L * 18), 8.5f, 70, 3, 0.1f, "caiet3.jpg")
             )
         )
+        ProductDB.addProductType(
+            "Milk",
+            listOf(
+                Produce("9", 401, Date(System.currentTimeMillis() + 86400000L * 20), 20.0f, 60, 4, 0.2f, "lapte1.jpg"),
+                Produce("10", 402, Date(System.currentTimeMillis() + 86400000L * 18), 15.5f, 40, 4, 0.3f, "lapte2.jpg"),
+                Produce("11", 403, Date(System.currentTimeMillis() + 86400000L * 18), 18.5f, 70, 4, 0.1f, "lapte3.jpg")
+            )
+        )
+        ProductDB.addProductType(
+            "Littels",
+            listOf(
+                Produce("12", 501, Date(System.currentTimeMillis() + 86400000L * 20), 100.0f, 100, 5, 0.3f, "mic1.jpg"),
+                Produce("13", 502, Date(System.currentTimeMillis() + 86400000L * 18), 85.5f, 80, 5, 0.2f, "mic2.jpg"),
+                Produce("14", 503, Date(System.currentTimeMillis() + 86400000L * 18), 98.5f, 70, 5, 0.1f, "mic3.jpg")
+            )
+        )
+
+        ProductDB.addProductType(
+            "Bread",
+            listOf(
+                Produce("15", 601, Date(System.currentTimeMillis() + 86400000L * 20), 5.0f, 60, 6, 0.0f, "paine1.jpg"),
+                Produce("16", 602, Date(System.currentTimeMillis() + 86400000L * 18), 4.5f, 40, 6, 0.3f, "paine2.jpg"),
+                Produce("17", 603, Date(System.currentTimeMillis() + 86400000L * 18), 8.5f, 70, 6, 0.5f, "paine3.jpg")
+            )
+        )
+        ProductDB.addProductType(
+            "Pen",
+            listOf(
+                Produce("18", 701, Date(System.currentTimeMillis() + 86400000L * 20), 5.0f, 60, 7, 0.0f, "pix1.jpg"),
+                Produce("19", 702, Date(System.currentTimeMillis() + 86400000L * 18), 4.5f, 40, 7, 0.3f, "pix2.jpg"),
+                Produce("20", 703, Date(System.currentTimeMillis() + 86400000L * 18), 8.5f, 70, 7, 0.5f, "pix3.jpg")
+            )
+        )
+
+        ProductDB.addProductType(
+            "tissues",
+            listOf(
+                Produce("21", 801, Date(System.currentTimeMillis() + 86400000L * 20), 20.0f, 60, 8, 0.0f, "servetele1.jpg"),
+                Produce("22", 802, Date(System.currentTimeMillis() + 86400000L * 18), 10.5f, 40, 8, 0.3f, "servetele2.jpg"),
+                Produce("23", 803, Date(System.currentTimeMillis() + 86400000L * 18), 18.5f, 70, 8, 0.5f, "servetele3.jpg")
+            )
+        )
     }
 
     fun getBudget(): Float {
