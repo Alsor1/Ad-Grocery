@@ -12,11 +12,30 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ad_grocery.databinding.ActivityMainBinding
+import com.example.ad_grocery.objects.User
+import java.time.LocalDate
+import java.util.Date
+import java.util.HashMap
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        var user: User = User(
+            1234,
+            "John Doe",
+            250f,
+            250f,
+            7,
+            Date(System.currentTimeMillis()),
+            HashMap(),
+            ArrayList(),
+            ArrayList(),
+            25.8f
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,5 +73,9 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    fun getBudget(): Float {
+        return user.currBudget
     }
 }

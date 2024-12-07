@@ -8,18 +8,21 @@ class User(
     val id: Int, var name: String, var initBudget: Float,
     var currBudget: Float, var daysInterval: Int, var lastReset: Date,
     var preferences: HashMap<String, Int>, var history: ArrayList<Produce>,
-    var toBuy: ArrayList<Produce>
+    var toBuy: ArrayList<Produce>, var moneySaved: Float
 ) {
     /**
      * Returns true, if the specified interval has passed and the budget has been reset
      */
     fun resetBudget(currTime: Date): Boolean {
-        val timePassed = (currTime.time - lastReset.time) / 86400000
-        if (timePassed >= daysInterval) {
+        if (timePassed(currTime) >= daysInterval) {
             currBudget = initBudget
             return true
         }
         return false
+    }
+
+    fun timePassed(currTime: Date): Long {
+        return (currTime.time - lastReset.time) / 86400000
     }
 
     /**
