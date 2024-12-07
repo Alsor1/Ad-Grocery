@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var user: User = User(
             1234,
-            "John Doe",
+            "Mariusel",
             250f,
             250f,
             7,

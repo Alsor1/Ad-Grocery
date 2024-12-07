@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         binding.budgetView.text = "Current budget: " + MainActivity.user.currBudget
-        binding.nameView.text = "Hello, " + MainActivity.user.name
+        binding.nameView.text = "Hello, " + MainActivity.user.name + "!"
         binding.daysUntilView.text =
             "Days until budget reset: " + (MainActivity.user.daysInterval
                     - MainActivity.user.timePassed(
