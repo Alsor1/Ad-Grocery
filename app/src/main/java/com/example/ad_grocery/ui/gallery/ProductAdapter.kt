@@ -1,3 +1,5 @@
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,28 +32,47 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
 
-        // Set product details
         holder.productNameText.text = "ID: ${product.id}"
         holder.productCostText.text = "Price: $${product.cost * product.quantity}"
         holder.productQuantityText.text = "Quantity: ${product.quantity}"
-        // Load image (use an image library like Glide for real apps)
         holder.productImage.setImageResource(R.drawable.ic_menu_gallery) // Placeholder image
 
-        // Increase quantity
         holder.increaseButton.setOnClickListener {
             product.quantity++
             notifyItemChanged(position)
             onQuantityChange(product.cost)
         }
 
-        // Decrease quantity
         holder.decreaseButton.setOnClickListener {
             if (product.quantity > 0) {
                 product.quantity--
-                notifyItemChanged(position)
-                onQuantityChange(-product.cost)
+                if (product.quantity == 0) {
+                    showRemoveDialog(product, position, holder.itemView.context)
+                } else {
+                    notifyItemChanged(position)
+                    onQuantityChange(-product.cost)
+                }
             }
         }
+    }
+
+    private fun showRemoveDialog(product: Produce, position: Int, context: Context) {
+        val dialog = AlertDialog.Builder(context)
+            .setTitle("Remove Product")
+            .setMessage("The quantity of ${product.id} has reached zero. Do you want to remove it from the list?")
+            .setPositiveButton("Yes") { _, _ ->
+                products.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, products.size);
+                onQuantityChange(-product.cost)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                products[position].quantity++
+                dialog.dismiss()
+            }
+            .create()
+
+        dialog.show()
     }
 
     override fun getItemCount(): Int = products.size
