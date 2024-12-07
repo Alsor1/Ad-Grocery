@@ -63,6 +63,7 @@ class ProductAdapter(
             .setPositiveButton("Yes") { _, _ ->
                 products.removeAt(position)
                 notifyItemRemoved(position)
+                notifyItemRangeChanged(position, products.size);
                 onQuantityChange(-product.cost)
             }
             .setNegativeButton("No") { dialog, _ ->

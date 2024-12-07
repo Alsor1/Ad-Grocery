@@ -82,6 +82,7 @@ class GalleryFragment : Fragment() {
             products.remove(it)
 
             adapter.notifyItemRemoved(position)
+            adapter.notifyItemRangeChanged(position, products.size);
 
             totalCost -= it.cost * it.quantity
             updateTotalPrice()
