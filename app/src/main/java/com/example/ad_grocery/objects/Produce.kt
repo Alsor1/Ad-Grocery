@@ -51,17 +51,26 @@ object ProductDB {
         }
     }
 
-    fun calculateCostScore(id: String): Int {
+    fun calculateCostScore(id: String, brand: Int): Int {
         val prices: List<Float>? = this.getPrices(id)
-
-        currentPrice = 
-
-        if (prices == null) {
+    
+        if (prices.isNullOrEmpty()) {
             return 0
         }
-
-        val minPrice = prices.sorted().take(10)
+    
+        if (brand !in prices.indices) {
+            return 0
+        }
+    
+        val smallestPrices = prices.sorted().take(10)
+    
+        val currentPrice = prices[brand]
+    
+        val position = smallestPrices.indexOf(currentPrice)
+    
+        return if (position != -1) 10 - position else 0
     }
+    
 }
 
 
@@ -75,7 +84,7 @@ class Produce(
     var discount: Float
     val imageAddress: String
 ) {
-    constructor(brand: Int expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount)
+    constructor(brand: Int expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount, image)
 
     fun calculateUtility(user: User): Float {
         val prefWeight = 0.5f
@@ -86,7 +95,7 @@ class Produce(
             preferenceScore = 0
         }
         val expiryScore = calculateExpiryScore()
-        val costScore = ProductDB.calculateCostScore(this.id)
+        val costScore = ProductDB.calculateCostScore(this.id, this.brand)
 
         return prefWeight * preferenceScore + costWeight * costScore + expiryWeight * expiryScore + discount
     }
