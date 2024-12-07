@@ -10,6 +10,9 @@ class User(
     var preferences: HashMap<String, Int>, var history: ArrayList<Produce>,
     var toBuy: ArrayList<Produce>
 ) {
+    /**
+     * Returns true, if the specified interval has passed and the budget has been reset
+     */
     fun resetBudget(currTime: Date): Boolean {
         val timePassed = (currTime.time - lastReset.time) / 86400000
         if (timePassed >= daysInterval) {
@@ -19,6 +22,9 @@ class User(
         return false
     }
 
+    /**
+     * If the user bought the current list, add all the produces to history
+     */
     fun boughtList() {
         for (prod in toBuy) {
             history.add(prod)
@@ -26,7 +32,4 @@ class User(
         toBuy = ArrayList()
     }
 
-    fun setPreference(id: String, level: Int) {
-        preferences[id] = level
-    }
 }
