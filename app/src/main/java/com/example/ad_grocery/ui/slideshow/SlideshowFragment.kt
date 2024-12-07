@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.ad_grocery.MainActivity
-import com.example.ad_grocery.R
 import com.example.ad_grocery.databinding.FragmentSlideshowBinding
-import com.example.ad_grocery.ui.history.HistoryFragment
 
 class SlideshowFragment : Fragment() {
 
@@ -32,6 +30,17 @@ class SlideshowFragment : Fragment() {
         val addBudgetInput: EditText = binding.inputAddBudget
         val subtractBudgetInput: EditText = binding.inputSubtractBudget
         val resetDayInput: EditText = binding.inputResetDay
+        val maxEconomySwitch: Switch = binding.switch1
+
+        // Initialize switch state based on user's maxEconomy property
+        maxEconomySwitch.isChecked = MainActivity.user.maxEconomy
+
+        // Switch listener
+        maxEconomySwitch.setOnCheckedChangeListener { _, isChecked ->
+            MainActivity.user.maxEconomy = isChecked
+            val state = if (isChecked) "enabled" else "disabled"
+            Toast.makeText(context, "Maximum Economy $state", Toast.LENGTH_SHORT).show()
+        }
 
         // Add to current budget button
         binding.btnAddBudget.setOnClickListener {
@@ -73,6 +82,8 @@ class SlideshowFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        // Format reset day input as dd/MM
         binding.inputResetDay.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -90,7 +101,6 @@ class SlideshowFragment : Fragment() {
                 }
             }
         })
-
 
         return root
     }

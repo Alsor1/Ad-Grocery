@@ -11,7 +11,7 @@ class User(
     val id: Int, var name: String, var initBudget: Float,
     var currBudget: Float, var daysInterval: Int, var lastReset: Date,
     var preferences: HashMap<Produce, Boolean>, var history: ArrayList<Produce>,
-    var toBuy: ArrayList<Produce>, var moneySaved: Float
+    var toBuy: ArrayList<Produce>, var moneySaved: Float, var maxEconomy: Boolean = false
 ) {
 
     fun resetBudget(currTime: Date): Boolean {
