@@ -10,4 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="profile_currBud">Add to current budget</string>
+    <string name="profile_mainBud">Change main Budget</string>
+    <string name="profile_changeDate">Change budget reset date</string>
+    <string name="profile_goToHistory">See history</string>
 </resources>
