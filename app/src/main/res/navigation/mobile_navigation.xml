@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_grocery"
-        android:name="com.example.ad_grocery.ui.gallery.GalleryFragment"
+        android:name="com.example.ad_grocery.ui.groceryList.GroceryListFragment"
         android:label="@string/menu_grocery"
         tools:layout="@layout/fragment_gallery" />
 

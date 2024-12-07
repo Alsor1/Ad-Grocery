@@ -1,4 +1,4 @@
-package com.example.ad_grocery.ui.gallery
+package com.example.ad_grocery.ui.groceryList
 
 import ProductAdapter
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.example.ad_grocery.databinding.FragmentGalleryBinding
 import com.example.ad_grocery.objects.Produce
 import java.util.Date
 
-class GalleryFragment : Fragment() {
+class GroceryListFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
