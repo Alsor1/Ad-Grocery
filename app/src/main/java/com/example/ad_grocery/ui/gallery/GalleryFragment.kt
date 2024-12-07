@@ -75,6 +75,20 @@ class GalleryFragment : Fragment() {
         updateTotalPrice()
     }
 
+    fun removeProduct(productId: String) {
+        val productToRemove = products.find { it.id == productId }
+
+        productToRemove?.let {
+            val position = products.indexOf(it)
+            products.remove(it)
+
+            adapter.notifyItemRemoved(position)
+
+            totalCost -= it.cost * it.quantity
+            updateTotalPrice()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
