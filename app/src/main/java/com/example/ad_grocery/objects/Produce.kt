@@ -11,9 +11,9 @@ class IdGenerator() {
 }
 
 object ProductDB {
-    private val productDatabase: HashMap<String, MutableList<Float>> = HashMap()
+    private val productDatabase: HashMap<String, MutableList<Produce>> = HashMap()
 
-    fun addProductType(productType: String, prices: List<Float>) {
+    fun addProductType(productType: String, prices: List<Produce>) {
         if (productType in productDatabase) {
             productDatabase[productType]?.addAll(prices)
         } else {
@@ -21,11 +21,11 @@ object ProductDB {
         }
     }
 
-    fun addPriceToProduct(productType: String, price: Float) {
-        productDatabase.computeIfAbsent(productType) { mutableListOf() }.add(price)
+    fun addPriceToProduct(productType: String, product: Produce) {
+        productDatabase.computeIfAbsent(productType) { mutableListOf() }.add(product)
     }
 
-    fun getPrices(productType: String): List<Float>? {
+    fun getProducts(productType: String): List<Produce>? {
         return productDatabase[productType]
     }
 
@@ -33,8 +33,8 @@ object ProductDB {
         productDatabase.remove(productType)
     }
 
-    fun removePriceFromProduct(productType: String, price: Float) {
-        productDatabase[productType]?.remove(price)
+    fun removePriceFromProduct(productType: String, produce: Produce) {
+        productDatabase[productType]?.remove(produce)
     }
 
     fun hasProductType(productType: String): Boolean {
@@ -45,34 +45,41 @@ object ProductDB {
         return productDatabase.keys
     }
 
-    fun printDatabase() {
-        for ((productType, prices) in productDatabase) {
-            println("$productType: $prices")
-        }
+    fun getDatabase(): HashMap<String, MutableList<Produce>> {
+        return productDatabase
     }
 
     fun calculateCostScore(id: String, brand: Int): Int {
-        val prices: List<Float>? = this.getPrices(id)
+        val prod: List<Produce>? = this.getProducts(id)
     
-        if (prices.isNullOrEmpty()) {
+        if (prod.isNullOrEmpty()) {
             return 0
         }
     
-        if (brand !in prices.indices) {
+        var isBrandPresent = false
+        for (p in prod) {
+            if (p.brand == brand) {
+                isBrandPresent = true
+                break
+            }
+        }
+    
+        if (!isBrandPresent) {
             return 0
         }
     
-        val smallestPrices = prices.sorted().take(10)
+        val top10Products = prod.sortedBy { it.cost }.take(10)
     
-        val currentPrice = prices[brand]
+        for ((index, p) in top10Products.withIndex()) {
+            if (p.brand == brand) {
+                return 10 - index
+            }
+        }
     
-        val position = smallestPrices.indexOf(currentPrice)
-    
-        return if (position != -1) 10 - position else 0
+        return 0
     }
     
 }
-
 
 class Produce(
     val id: String,
@@ -84,16 +91,13 @@ class Produce(
     var discount: Float,
     val imageAddress: String
 ) {
-    constructor(brand: Int, expiry: Date, cost: Float, quantity: Int, category: Int, discount: Float, image: String) : this(IdGenerator().getId().toString(), brand, expiry, cost, quantity, category, discount, image)
+    var utility: Float = 0f
 
     fun calculateUtility(user: User): Float {
         val prefWeight = 0.5f
         val costWeight = 0.3f
         val expiryWeight = 0.2f
-        var preferenceScore = user.preferences.get(this.id)
-        if (preferenceScore == null) {
-            preferenceScore = 0
-        }
+        val preferenceScore = if (user.preferences[this] == true) 1 else 0
         val expiryScore = calculateExpiryScore()
         val costScore = ProductDB.calculateCostScore(this.id, this.brand)
 
@@ -109,8 +113,8 @@ class Produce(
         val currentDate = Date().time
         val timeDifference = expiryDate - currentDate
         val daysDifference = (timeDifference / (1000 * 60 * 60 * 24)).toInt()
-        
-        if (daysDifference < 0) {
+
+        if (daysDifference < 1) {
             return 0
         } else {
             for (i in 1..10) {
@@ -121,5 +125,4 @@ class Produce(
         }
         return 10
     }
-
 }
