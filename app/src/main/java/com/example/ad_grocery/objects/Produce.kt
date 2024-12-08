@@ -80,7 +80,7 @@
         }
     }
 
-    class Produce(
+    data class Produce(
         var id: String,
         var brand: Int,
         var expiry: Date,

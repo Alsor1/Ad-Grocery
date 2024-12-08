@@ -22,9 +22,16 @@
         android:name="com.example.ad_grocery.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_slideshow" />
+
     <fragment
         android:id="@+id/nav_history"
         android:name="com.example.ad_grocery.ui.history.HistoryFragment"
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/nav_product_list"
+        android:name="com.example.ad_grocery.ui.productList.ProductListFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_product_list" />
 </navigation>

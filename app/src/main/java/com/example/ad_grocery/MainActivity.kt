@@ -15,6 +15,7 @@ import com.example.ad_grocery.databinding.ActivityMainBinding
 import com.example.ad_grocery.objects.ProductDB
 import com.example.ad_grocery.objects.Produce
 import com.example.ad_grocery.objects.User
+import com.example.ad_grocery.ui.productList.ProductListFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -52,9 +53,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController.navigate(R.id.nav_product_list)
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
