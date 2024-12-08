@@ -34,7 +34,7 @@ class GroceryListFragment : Fragment() {
         }
         binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.productRecyclerView.adapter = adapter
-
+        totalCost = 0f;
         for (prod in products) {
             totalCost += prod.cost * prod.quantity * (1f - prod.discount)
         }
