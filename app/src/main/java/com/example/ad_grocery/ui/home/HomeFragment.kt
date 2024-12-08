@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.ad_grocery.MainActivity
 import com.example.ad_grocery.databinding.FragmentHomeBinding
+import com.example.ad_grocery.objects.Produce
 import com.example.ad_grocery.objects.ProductDB
 import com.example.ad_grocery.objects.Recipe
 import java.util.Date
@@ -22,9 +23,9 @@ class HomeFragment : Fragment() {
     // Example Recipe object
     private val exampleRecipe = Recipe(
         ingredients = listOf(
-            ProductDB.getProducts("Littles")?.get(1),
-            ProductDB.getProducts("Water")?.get(0),
-            ProductDB.getProducts("Bread")?.get(0)
+            Produce("2", 101, Date(System.currentTimeMillis() + 86400000L * 70), 3.0f, 1, 1, 0.05f, "apa2.jpg"),
+            Produce("12", 501, Date(System.currentTimeMillis() + 86400000L * 20), 100.0f, 1, 5, 0.3f, "mic1.jpg"),
+            Produce("15", 601, Date(System.currentTimeMillis() + 86400000L * 20), 5.0f, 1, 6, 0.0f, "paine1.jpg"),
         ),
         name = "Sample Recipe",
         recipeDiscount = 0.8f,
