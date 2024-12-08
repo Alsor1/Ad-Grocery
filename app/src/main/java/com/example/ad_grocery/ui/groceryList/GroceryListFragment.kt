@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ad_grocery.MainActivity
+import com.example.ad_grocery.R
 import com.example.ad_grocery.databinding.FragmentGalleryBinding
 import com.example.ad_grocery.objects.Produce
 import com.example.ad_grocery.objects.ProductDB
@@ -19,13 +21,15 @@ class GroceryListFragment : Fragment() {
 
     private lateinit var adapter: ProductAdapter
     private var totalCost: Float = 0.0f
-    private val products: ArrayList<Produce> = MainActivity.user.toBuy
+    private var products: ArrayList<Produce> = MainActivity.user.toBuy
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        MainActivity.user.mergeSameProducts()
+        products = MainActivity.user.toBuy
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         // Set up RecyclerView
         adapter = ProductAdapter(products) { costChange ->
@@ -44,12 +48,16 @@ class GroceryListFragment : Fragment() {
             handleMagicButtonClick()
         }
 
-
         return binding.root
     }
 
     private fun updateTotalPrice() {
         binding.totalPriceText.text = "Total Price: %.2f".format(totalCost)
+        if (totalCost > MainActivity.user.currBudget) {
+            binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
+        } else {
+            binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text))
+        }
     }
 
 
@@ -61,7 +69,13 @@ class GroceryListFragment : Fragment() {
             prodDB[key] = newList
         }
         MainActivity.user.optimisedGroceryList(prodDB)
-        adapter.notifyDataSetChanged()
+        products = MainActivity.user.toBuy
+        adapter = ProductAdapter(products) { costChange ->
+            totalCost += costChange
+            updateTotalPrice()
+        }
+        binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.productRecyclerView.adapter = adapter
         totalCost = 0f
         for (prod in products) {
             totalCost += prod.cost * prod.quantity * (1f - prod.discount)
