@@ -46,11 +46,6 @@ class ProductAdapter(
             onQuantityChange(product.cost)
         }
 
-        holder.magicButton.setOnClickListener {
-            // TODO: call function to update list
-            notifyItemRangeChanged(0, products.size)
-        }
-
         holder.decreaseButton.setOnClickListener {
             if (product.quantity > 0) {
                 product.quantity--
