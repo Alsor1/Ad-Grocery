@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ad_grocery.MainActivity
+import com.example.ad_grocery.R
 import com.example.ad_grocery.databinding.FragmentGalleryBinding
 import com.example.ad_grocery.objects.Produce
 import com.example.ad_grocery.objects.ProductDB
@@ -51,6 +53,11 @@ class GroceryListFragment : Fragment() {
 
     private fun updateTotalPrice() {
         binding.totalPriceText.text = "Total Price: %.2f".format(totalCost)
+        if (totalCost > MainActivity.user.currBudget) {
+            binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
+        } else {
+            binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text))
+        }
     }
 
 
