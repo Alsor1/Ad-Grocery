@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ad_grocery.MainActivity
 import com.example.ad_grocery.databinding.FragmentGalleryBinding
 import com.example.ad_grocery.objects.Produce
+import com.example.ad_grocery.objects.User
 import java.util.Date
 
 class GroceryListFragment : Fragment() {
@@ -57,7 +59,7 @@ class GroceryListFragment : Fragment() {
             totalCost += prod.cost * prod.quantity
         }
         updateTotalPrice()
-
+        MainActivity.user.groceryTotal = totalCost
         binding.magicButton.setOnClickListener {
             handleMagicButtonClick()
         }

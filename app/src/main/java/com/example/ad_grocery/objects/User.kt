@@ -11,7 +11,8 @@ class User(
     val id: Int, var name: String, var initBudget: Float,
     var currBudget: Float, var daysInterval: Int, var lastReset: Date,
     var preferences: HashMap<Produce, Boolean>, var history: ArrayList<Produce>,
-    var toBuy: ArrayList<Produce>, var moneySaved: Float, var maxEconomy: Boolean = false
+    var toBuy: ArrayList<Produce>, var moneySaved: Float, var maxEconomy: Boolean = false,
+    var groceryTotal : Float= 0f
 ) {
 
     fun resetBudget(currTime: Date): Boolean {
@@ -92,6 +93,32 @@ class User(
             null
         }
     }
+    fun optimisedGroceryList(ProductDB: HashMap<String, List<Produce>>) {
+        if(maxEconomy == false && groceryTotal < currBudget){
+            return
+        }
+        for ((productType, productList) in ProductDB) {
+            for (product in toBuy){
+                if(productList[0].category == product.category){
+                    groceryTotal -= product.cost - productList[0].cost
+                    val tempQuantity = product.quantity // Preserve quantity
+                    val tempDiscount = product.discount
+                    product.id = productList[0].id
+                    product.brand = productList[0].brand
+                    product.expiry = productList[0].expiry
+                    product.cost = productList[0].cost
+                    product.category = productList[0].category
+                    product.imageAddress = productList[0].imageAddress
 
+                    // Restore preserved values
+                    product.quantity = tempQuantity
+                    product.discount = tempDiscount
+                    if(maxEconomy == false && groceryTotal >= currBudget){
+                        return
+                    }
+                }
+            }
 
+        }
+    }
 }

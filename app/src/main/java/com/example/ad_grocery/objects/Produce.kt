@@ -85,14 +85,14 @@
     }
 
     class Produce(
-        val id: String,
-        val brand: Int,
-        val expiry: Date,
-        val cost: Float,
+        var id: String,
+        var brand: Int,
+        var expiry: Date,
+        var cost: Float,
         var quantity: Int,
         var category: Int,
         var discount: Float,
-        val imageAddress: String
+        var imageAddress: String
     ) {
         var utility: Float = 0f
 
