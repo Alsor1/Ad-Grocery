@@ -92,10 +92,46 @@ class User(
             null
         }
     }
-    fun optimisedGroceryList(productDB: HashMap<String, MutableList<Produce>>) {
-        if(maxEconomy == false && groceryTotal < currBudget){
-            return
+
+    fun addToPreferences() {
+        for (product in toBuy) {
+            preferences[product] = true
         }
+    }
+
+    fun optimisedGroceryList(productDB: HashMap<String, MutableList<Produce>>) {
+        if(maxEconomy == false){
+            this.addToPreferences()
+
+
+            for ((productType, productList) in productDB) {
+                productList.sortByDescending { it.calculateUtility(this) }
+                for (product in toBuy){
+                    if(productList[0].category == product.category){
+                        var aux = groceryTotal - product.cost - productList[0].cost 
+                        if (aux < currBudget) {
+                            groceryTotal = aux
+                            val tempQuantity = product.quantity // Preserve quantity
+                            product.id = productList[0].id
+                            product.brand = productList[0].brand
+                            product.expiry = productList[0].expiry
+                            product.cost = productList[0].cost
+                            product.category = productList[0].category
+                            product.imageAddress = productList[0].imageAddress
+                            product.discount = productList[0].discount
+
+                            // Restore preserved values
+                            product.quantity = tempQuantity
+                            if(maxEconomy == false && groceryTotal >= currBudget){
+                                return
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
         for ((productType, productList) in productDB) {
             for (product in toBuy){
                 if(productList[0].category == product.category){
