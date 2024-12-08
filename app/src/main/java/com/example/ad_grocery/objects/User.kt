@@ -132,25 +132,26 @@ class User(
 
             }
         }
+        else {
+            for ((productType, productList) in productDB) {
+                for (product in toBuy){
+                    if(productList[0].category == product.category){
+                        groceryTotal -= product.cost - productList[0].cost
+                        val tempQuantity = product.quantity // Preserve quantity
+                        product.id = productList[0].id
+                        product.brand = productList[0].brand
+                        product.expiry = productList[0].expiry
+                        product.cost = productList[0].cost
+                        product.category = productList[0].category
+                        product.imageAddress = productList[0].imageAddress
+                        product.discount = productList[0].discount
 
-        for ((productType, productList) in productDB) {
-            for (product in toBuy){
-                if(productList[0].category == product.category){
-                    groceryTotal -= product.cost - productList[0].cost
-                    val tempQuantity = product.quantity // Preserve quantity
-                    product.id = productList[0].id
-                    product.brand = productList[0].brand
-                    product.expiry = productList[0].expiry
-                    product.cost = productList[0].cost
-                    product.category = productList[0].category
-                    product.imageAddress = productList[0].imageAddress
-                    product.discount = productList[0].discount
-
-                    // Restore preserved values
-                    product.quantity = tempQuantity
-                    if(maxEconomy == false && groceryTotal < currBudget){
-                        mergeSameProducts()
-                        return
+                        // Restore preserved values
+                        product.quantity = tempQuantity
+                        if(maxEconomy == false && groceryTotal < currBudget){
+                            mergeSameProducts()
+                            return
+                        }
                     }
                 }
             }

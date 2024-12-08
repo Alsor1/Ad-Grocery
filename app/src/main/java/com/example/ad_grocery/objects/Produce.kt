@@ -94,8 +94,8 @@
         var utility: Float = 0f
 
         fun calculateUtility(user: User): Float {
-            val prefWeight = 0.5f
-            val costWeight = 0.3f
+            val prefWeight = 0.2f
+            val costWeight = 0.6f
             val expiryWeight = 0.2f
             val preferenceScore = if (user.preferences[this] == true) 1 else 0
             val expiryScore = calculateExpiryScore()
