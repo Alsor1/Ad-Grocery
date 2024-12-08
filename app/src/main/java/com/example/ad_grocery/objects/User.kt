@@ -3,7 +3,6 @@ package com.example.ad_grocery.objects
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.HashMap
 import java.util.Locale
 import kotlin.collections.ArrayList
 
@@ -93,26 +92,25 @@ class User(
             null
         }
     }
-    fun optimisedGroceryList(ProductDB: HashMap<String, List<Produce>>) {
+    fun optimisedGroceryList(productDB: HashMap<String, MutableList<Produce>>) {
         if(maxEconomy == false && groceryTotal < currBudget){
             return
         }
-        for ((productType, productList) in ProductDB) {
+        for ((productType, productList) in productDB) {
             for (product in toBuy){
                 if(productList[0].category == product.category){
                     groceryTotal -= product.cost - productList[0].cost
                     val tempQuantity = product.quantity // Preserve quantity
-                    val tempDiscount = product.discount
                     product.id = productList[0].id
                     product.brand = productList[0].brand
                     product.expiry = productList[0].expiry
                     product.cost = productList[0].cost
                     product.category = productList[0].category
                     product.imageAddress = productList[0].imageAddress
+                    product.discount = productList[0].discount
 
                     // Restore preserved values
                     product.quantity = tempQuantity
-                    product.discount = tempDiscount
                     if(maxEconomy == false && groceryTotal >= currBudget){
                         return
                     }

@@ -78,10 +78,6 @@
 
             return 0
         }
-
-        fun sortDB() {
-            productDatabase.forEach { (_, prods) -> prods.sortedBy { it.cost * it.discount }}
-        }
     }
 
     class Produce(

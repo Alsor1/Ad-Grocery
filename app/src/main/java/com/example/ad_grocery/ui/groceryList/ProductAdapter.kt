@@ -1,5 +1,6 @@
 import android.app.AlertDialog
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,10 @@ class ProductAdapter(
         val product = products[position]
 
         holder.productNameText.text = "ID: ${product.id}"
-        holder.productCostText.text = "Price: $${product.cost * product.quantity}"
+        holder.productCostText.text = "Price: ${product.cost * product.quantity * (1 - product.discount)}"
         holder.productQuantityText.text = "Quantity: ${product.quantity}"
         holder.productImage.setImageResource(R.drawable.ic_menu_gallery) // Placeholder image
+
 
         holder.increaseButton.setOnClickListener {
             product.quantity++
@@ -53,7 +55,7 @@ class ProductAdapter(
                     showRemoveDialog(product, position, holder.itemView.context)
                 } else {
                     notifyItemChanged(position)
-                    onQuantityChange(-product.cost)
+                    onQuantityChange(-product.cost * (1 - product.discount))
                 }
             }
         }

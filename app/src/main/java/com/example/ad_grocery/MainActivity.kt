@@ -32,7 +32,13 @@ class MainActivity : AppCompatActivity() {
             Date(System.currentTimeMillis()),
             HashMap(),
             ArrayList(),
-            ArrayList(),
+            arrayListOf(
+                Produce("1", 100, Date(System.currentTimeMillis() + 86400000L * 100), 2.5f, 3, 1, 0.1f, "apa1.jpg"),
+                Produce("6", 203, Date(System.currentTimeMillis() + 86400000L * 40), 20.0f, 5, 2, 0.15f, "baton3.jpg"),
+                Produce("9", 401, Date(System.currentTimeMillis() + 86400000L * 20), 20.0f, 1, 4, 0.2f, "lapte1.jpg"),
+                Produce("8", 303, Date(System.currentTimeMillis() + 86400000L * 18), 8.5f, 6, 3, 0.1f, "caiet3.jpg")
+
+            ),
             25.8f
         )
     }
@@ -76,6 +82,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeDatabase() {
+
+
         // Add products to the database
         ProductDB.addProductType(
             "Water",
