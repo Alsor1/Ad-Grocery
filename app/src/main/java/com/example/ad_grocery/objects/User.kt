@@ -1,5 +1,6 @@
 package com.example.ad_grocery.objects
 
+import com.example.ad_grocery.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -112,11 +113,26 @@ class User(
                     // Restore preserved values
                     product.quantity = tempQuantity
                     if(maxEconomy == false && groceryTotal >= currBudget){
+                        mergeSameProducts()
                         return
                     }
                 }
             }
-
         }
+        mergeSameProducts()
+    }
+
+    fun mergeSameProducts() {
+        val mergedMap = mutableMapOf<String, Produce>()
+        for (product in toBuy) {
+            if (mergedMap.containsKey(product.id)) {
+                val existingProduct = mergedMap[product.id]!!
+                existingProduct.quantity += product.quantity
+            } else {
+                mergedMap[product.id] = product
+            }
+        }
+
+        toBuy = ArrayList(mergedMap.values)
     }
 }

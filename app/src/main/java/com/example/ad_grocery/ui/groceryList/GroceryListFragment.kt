@@ -19,13 +19,15 @@ class GroceryListFragment : Fragment() {
 
     private lateinit var adapter: ProductAdapter
     private var totalCost: Float = 0.0f
-    private val products: ArrayList<Produce> = MainActivity.user.toBuy
+    private var products: ArrayList<Produce> = MainActivity.user.toBuy
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        MainActivity.user.mergeSameProducts()
+        products = MainActivity.user.toBuy
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         // Set up RecyclerView
         adapter = ProductAdapter(products) { costChange ->
@@ -44,7 +46,6 @@ class GroceryListFragment : Fragment() {
             handleMagicButtonClick()
         }
 
-
         return binding.root
     }
 
@@ -61,7 +62,13 @@ class GroceryListFragment : Fragment() {
             prodDB[key] = newList
         }
         MainActivity.user.optimisedGroceryList(prodDB)
-        adapter.notifyDataSetChanged()
+        products = MainActivity.user.toBuy
+        adapter = ProductAdapter(products) { costChange ->
+            totalCost += costChange
+            updateTotalPrice()
+        }
+        binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.productRecyclerView.adapter = adapter
         totalCost = 0f
         for (prod in products) {
             totalCost += prod.cost * prod.quantity * (1f - prod.discount)
