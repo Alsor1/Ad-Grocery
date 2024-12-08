@@ -20,7 +20,6 @@ class GroceryListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: ProductAdapter
-    private var totalCost: Float = 0.0f
     private var products: ArrayList<Produce> = MainActivity.user.toBuy
 
     override fun onCreateView(
@@ -33,17 +32,16 @@ class GroceryListFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         // Set up RecyclerView
         adapter = ProductAdapter(products) { costChange ->
-            totalCost += costChange
+            MainActivity.user.groceryTotal += costChange
             updateTotalPrice()
         }
         binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.productRecyclerView.adapter = adapter
-        totalCost = 0f;
+        MainActivity.user.groceryTotal  = 0f;
         for (prod in products) {
-            totalCost += prod.cost * prod.quantity * (1f - prod.discount)
+            MainActivity.user.groceryTotal  += prod.cost * prod.quantity * (1f - prod.discount)
         }
         updateTotalPrice()
-        MainActivity.user.groceryTotal = totalCost
         binding.magicButton.setOnClickListener {
             handleMagicButtonClick()
         }
@@ -52,8 +50,8 @@ class GroceryListFragment : Fragment() {
     }
 
     private fun updateTotalPrice() {
-        binding.totalPriceText.text = "Total Price: %.2f".format(totalCost)
-        if (totalCost > MainActivity.user.currBudget) {
+        binding.totalPriceText.text = "Total Price: %.2f".format(MainActivity.user.groceryTotal )
+        if (MainActivity.user.groceryTotal  > MainActivity.user.currBudget) {
             binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
         } else {
             binding.totalPriceText.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text))
@@ -71,14 +69,14 @@ class GroceryListFragment : Fragment() {
         MainActivity.user.optimisedGroceryList(prodDB)
         products = MainActivity.user.toBuy
         adapter = ProductAdapter(products) { costChange ->
-            totalCost += costChange
+            MainActivity.user.groceryTotal  += costChange
             updateTotalPrice()
         }
         binding.productRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.productRecyclerView.adapter = adapter
-        totalCost = 0f
+        MainActivity.user.groceryTotal  = 0f
         for (prod in products) {
-            totalCost += prod.cost * prod.quantity * (1f - prod.discount)
+            MainActivity.user.groceryTotal  += prod.cost * prod.quantity * (1f - prod.discount)
         }
         updateTotalPrice()
     }
@@ -88,7 +86,7 @@ class GroceryListFragment : Fragment() {
 
         adapter.notifyItemInserted(products.size - 1)
 
-        totalCost += product.cost * product.quantity
+        MainActivity.user.groceryTotal  += product.cost * product.quantity
         updateTotalPrice()
     }
 
@@ -102,7 +100,7 @@ class GroceryListFragment : Fragment() {
             adapter.notifyItemRemoved(position)
             adapter.notifyItemRangeChanged(position, products.size);
 
-            totalCost -= it.cost * it.quantity
+            MainActivity.user.groceryTotal  -= it.cost * it.quantity
             updateTotalPrice()
         }
     }
