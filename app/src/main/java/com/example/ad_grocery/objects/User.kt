@@ -101,7 +101,7 @@ class User(
     }
 
     fun optimisedGroceryList(productDB: HashMap<String, MutableList<Produce>>) {
-        if(maxEconomy == false){
+        if(maxEconomy == false && groceryTotal < currBudget){
             this.addToPreferences()
 
 
