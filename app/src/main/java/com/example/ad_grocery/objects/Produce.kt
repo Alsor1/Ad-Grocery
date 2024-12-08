@@ -88,7 +88,8 @@
         var quantity: Int,
         var category: Int,
         var discount: Float,
-        var imageAddress: String
+        var imageAddress: String,
+        var isChecked: Boolean = false
     ) {
         var utility: Float = 0f
 

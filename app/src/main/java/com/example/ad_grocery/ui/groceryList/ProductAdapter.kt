@@ -1,12 +1,14 @@
 import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ad_grocery.R
 import com.example.ad_grocery.objects.Produce
@@ -39,9 +41,23 @@ class ProductAdapter(
         holder.productNameText.text = "ID: ${product.id}"
         holder.productCostText.text = "Price: ${product.cost * product.quantity * (1 - product.discount)}"
         holder.productQuantityText.text = "Quantity: ${product.quantity}"
-        val imgResource = holder.productImage.context.resources.getIdentifier(product.imageAddress, "drawable", holder.productImage.context.packageName)
-        holder.productImage.setImageResource(imgResource) // Placeholder image
+        val prodImage = holder.productImage.context.resources.getIdentifier(product.imageAddress, "drawable", holder.productImage.context.packageName)
+        holder.productImage.setImageResource(prodImage) // Placeholder image
 
+        val imgResource = if (product.isChecked) R.drawable.ic_checked else R.drawable.ic_check
+        holder.itemView.findViewById<ImageButton>(R.id.checkButton).setImageResource(imgResource)
+
+        if (product.isChecked) {
+            holder.productNameText.paintFlags = holder.productNameText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.productNameText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.greyed_out))
+            holder.productCostText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.greyed_out))
+            holder.productQuantityText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.greyed_out))
+        } else {
+            holder.productNameText.paintFlags = holder.productNameText.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.productNameText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.default_text))
+            holder.productCostText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.default_text))
+            holder.productQuantityText.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.default_text))
+        }
 
         holder.increaseButton.setOnClickListener {
             product.quantity++
@@ -59,6 +75,11 @@ class ProductAdapter(
                     onQuantityChange(-product.cost * (1 - product.discount))
                 }
             }
+        }
+
+        holder.itemView.findViewById<ImageButton>(R.id.checkButton).setOnClickListener {
+            product.isChecked = !product.isChecked
+            notifyItemChanged(position)
         }
     }
 
