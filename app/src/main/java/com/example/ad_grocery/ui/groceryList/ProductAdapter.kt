@@ -62,7 +62,7 @@ class ProductAdapter(
         holder.increaseButton.setOnClickListener {
             product.quantity++
             notifyItemChanged(position)
-            onQuantityChange(product.cost)
+            onQuantityChange(product.cost * (1 - product.discount))
         }
 
         holder.decreaseButton.setOnClickListener {

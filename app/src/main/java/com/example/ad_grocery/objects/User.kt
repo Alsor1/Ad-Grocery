@@ -123,7 +123,7 @@ class User(
 
                             // Restore preserved values
                             product.quantity = tempQuantity
-                            if(maxEconomy == false && groceryTotal >= currBudget){
+                            if(maxEconomy == false && groceryTotal < currBudget){
                                 return
                             }
                         }
