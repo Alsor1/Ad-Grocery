@@ -10,15 +10,27 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.ad_grocery.MainActivity
 import com.example.ad_grocery.databinding.FragmentHomeBinding
+import com.example.ad_grocery.objects.ProductDB
+import com.example.ad_grocery.objects.Recipe
 import java.util.Date
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    // Example Recipe object
+    private val exampleRecipe = Recipe(
+        ingredients = listOf(
+            ProductDB.getProducts("Littles")?.get(1),
+            ProductDB.getProducts("Water")?.get(0),
+            ProductDB.getProducts("Bread")?.get(0)
+        ),
+        name = "Sample Recipe",
+        recipeDiscount = 0.8f,
+        ogPrice = 50f,
+        newPrice = 10f
+    )
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -41,11 +53,23 @@ class HomeFragment : Fragment() {
             ))
         binding.moneySavedView.text = "You saved " + MainActivity.user.moneySaved
 
+        // Link the button to the `bought` function
+        binding.buyButton.setOnClickListener {
+            exampleRecipe.bought()
+            updateUI()
+        }
+
         val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
         return root
+    }
+
+    private fun updateUI() {
+        binding.budgetView.text = "Current budget: ${MainActivity.user.currBudget}"
+        binding.moneySavedView.text = "You saved ${MainActivity.user.moneySaved}"
     }
 
     override fun onDestroyView() {

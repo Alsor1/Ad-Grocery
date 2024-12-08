@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ad_grocery.databinding.ActivityMainBinding
 import com.example.ad_grocery.objects.ProductDB
 import com.example.ad_grocery.objects.Produce
+import com.example.ad_grocery.objects.Recipe
 import com.example.ad_grocery.objects.User
 import com.example.ad_grocery.ui.productList.ProductListFragment
 import java.util.*
@@ -69,6 +70,18 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the hardcoded database
         initializeDatabase()
+
+//        Initialize Recipe
+        var recipe = Recipe(
+            ingredients = listOf(
+                ProductDB.getProducts("Littles")?.get(1),
+                ProductDB.getProducts("Water")?.get(0),
+                ProductDB.getProducts("Bread")?.get(0)
+            ),
+            name = "Littles",
+            recipeDiscount = 0.8f
+        )
+        recipe.calcPrices()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
