@@ -16,10 +16,12 @@ class ProductAdapter(
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val productImage: ImageView = view.findViewById(R.id.productImage)
         val productNameText: TextView = view.findViewById(R.id.productNameText)
         val productCostText: TextView = view.findViewById(R.id.productCostText)
         val addToBuyButton: Button = view.findViewById(R.id.addToBuyButton)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.addable_item_product, parent, false)
@@ -32,10 +34,19 @@ class ProductAdapter(
         holder.productNameText.text = product.id
         holder.productCostText.text = "Price: ${product.cost * (1 - product.discount)}"
 
+        // Set the product image
+        val imgResource = holder.productImage.context.resources.getIdentifier(
+            product.imageAddress,
+            "drawable",
+            holder.productImage.context.packageName
+        )
+        holder.productImage.setImageResource(imgResource)
+
         holder.addToBuyButton.setOnClickListener {
             onAddToBuyList(product)
         }
     }
+
 
     override fun getItemCount(): Int = products.size
 }

@@ -23,9 +23,9 @@ class HomeFragment : Fragment() {
     // Example Recipe object
     private val exampleRecipe = Recipe(
         ingredients = listOf(
-            Produce("2", 101, Date(System.currentTimeMillis() + 86400000L * 70), 3.0f, 1, 1, 0.05f, "apa2.jpg"),
-            Produce("12", 501, Date(System.currentTimeMillis() + 86400000L * 20), 100.0f, 1, 5, 0.3f, "mic1.jpg"),
-            Produce("15", 601, Date(System.currentTimeMillis() + 86400000L * 20), 5.0f, 1, 6, 0.0f, "paine1.jpg"),
+            Produce("2", 101, Date(System.currentTimeMillis() + 86400000L * 70), 3.0f, 1, 1, 0.05f, "apa2"),
+            Produce("12", 501, Date(System.currentTimeMillis() + 86400000L * 20), 100.0f, 1, 5, 0.3f, "mic1"),
+            Produce("15", 601, Date(System.currentTimeMillis() + 86400000L * 20), 5.0f, 1, 6, 0.0f, "paine1"),
         ),
         name = "Sample Recipe",
         recipeDiscount = 0.8f,

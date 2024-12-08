@@ -28,7 +28,8 @@ class HistoryAdapter(private val historyList: List<Produce>) :
         val product = historyList[position]
         holder.productName.text = product.id
         holder.productDetails.text = "Price: $${product.cost} x ${product.quantity}"
-        holder.productImage.setImageResource(R.drawable.ic_menu_gallery) // Placeholder image
+        val imgResource = holder.productImage.context.resources.getIdentifier(product.imageAddress, "drawable", holder.productImage.context.packageName)
+        holder.productImage.setImageResource(imgResource) // Placeholder image
     }
 
     override fun getItemCount(): Int = historyList.size

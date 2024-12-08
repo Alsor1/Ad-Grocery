@@ -39,7 +39,8 @@ class ProductAdapter(
         holder.productNameText.text = "ID: ${product.id}"
         holder.productCostText.text = "Price: ${product.cost * product.quantity * (1 - product.discount)}"
         holder.productQuantityText.text = "Quantity: ${product.quantity}"
-        holder.productImage.setImageResource(R.drawable.ic_menu_gallery) // Placeholder image
+        val imgResource = holder.productImage.context.resources.getIdentifier(product.imageAddress, "drawable", holder.productImage.context.packageName)
+        holder.productImage.setImageResource(imgResource) // Placeholder image
 
 
         holder.increaseButton.setOnClickListener {
